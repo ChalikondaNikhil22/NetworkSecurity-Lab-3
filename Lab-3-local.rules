@@ -1,0 +1,35 @@
+# $Id: local.rules,v 1.11 2004/07/23 20:15:44 bmc Exp $
+# ----------------
+# LOCAL RULES
+# ----------------
+# This file intentionally does not come with signatures.  Put your local
+# additio
+
+
+
+
+
+# Task-3: Detecting Port Scanning
+# The rule alerts on TCP traffic from 192.168.70.6 to any destination, indicating port scanning with specific flag settings. 
+#alert tcp 192.168.70.6 any -> 192.168.70.5 any (msg:”Port Scanning Detected”;flags:S; ttl:32; fragbits:MDR!; sid:2000002)
+
+
+
+
+# Task-4: Detecting DoS Attacks on Port 80
+# The rule identifies potential DoS attacks by monitoring TCP traffic with specific flag settings and fragment bits. It includes a threshold to track both source and destination.
+#alert tcp any any -> 192.168.70.5 80 (msg:”DoS-ATTACK Detected”;flags:S; fragbits:MDR!;threshold:type both, track by_dst,count 10, seconds 10; sid:2000003)
+
+
+
+
+# Task-5: Detecting SSH Brute Force Attempts
+# The rule aims to detect brute force attempts on SSH by monitoring established TCP flows to Server B. It looks for specific content in packets and uses a detection filter to track events.
+#alert tcp 192.168.70.6 any -> 192.168.70.5 22 (msg:”SSH Brute Force Attempt”;flow:established, to_server; content:"SSH-2.0-OpenSSH"; nocase; offset:0; depth:16;detection_filter:track by_src, count 1, seconds 60; sid:20000004; rev:1;)
+
+
+
+
+
+
+ 
